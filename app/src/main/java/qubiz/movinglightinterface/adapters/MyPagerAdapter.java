@@ -6,8 +6,6 @@ package qubiz.movinglightinterface.adapters;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.util.Log;
-import android.view.ViewGroup;
 
 import qubiz.movinglightinterface.fragments.ColorPickerFragment;
 import qubiz.movinglightinterface.fragments.PresetsFragment;
@@ -20,8 +18,8 @@ public class MyPagerAdapter extends FragmentPagerAdapter{
     PresetsFragment presetsFragment;
 
     final String[] tabNames = new String[] {
-            "COLOR PICKER",
             "PRESETS",
+            "COLOR PICKER"
     };
 
     public MyPagerAdapter(FragmentManager fragmentManager) {
@@ -37,15 +35,15 @@ public class MyPagerAdapter extends FragmentPagerAdapter{
     public Fragment getItem(int position) {
         switch(position) {
             case 0:
-                if(colorPickerFragment == null) {
-                    colorPickerFragment = ColorPickerFragment.newInstance(position);
-                }
-                return colorPickerFragment;
-            case 1:
                 if(presetsFragment == null) {
                     presetsFragment = PresetsFragment.newInstance(position);
                 }
                 return presetsFragment;
+            case 1:
+                if(colorPickerFragment == null) {
+                    colorPickerFragment = ColorPickerFragment.newInstance(position);
+                }
+                return colorPickerFragment;
             default: return null;
         }
     }

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,9 +15,6 @@ import qubiz.movinglightinterface.R;
 import qubiz.movinglightinterface.adapters.MyPagerAdapter;
 import qubiz.movinglightinterface.tabs.SlidingTabLayout;
 
-/**
- * Created by QUBiZ on 9-6-2015.
- */
 public class ManualModeFragment extends Fragment {
 
     private ViewPager viewPager;
@@ -39,10 +37,10 @@ public class ManualModeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_manual_mode, container, false);
         Log.e("ManualModeFragment", "onCreateView!");
-        myPagerAdapter = new MyPagerAdapter(getFragmentManager());
+        myPagerAdapter = new MyPagerAdapter(getChildFragmentManager());
 
         viewPager = (ViewPager) view.findViewById(R.id.view_pager);
-        viewPager.setAdapter(new MyPagerAdapter(getFragmentManager()));
+        viewPager.setAdapter(new MyPagerAdapter(getChildFragmentManager()));
 
         tabs = (SlidingTabLayout) view.findViewById(R.id.sliding_tabs);
         tabs.setDistributeEvenly(true);
@@ -59,6 +57,23 @@ public class ManualModeFragment extends Fragment {
     public void onStop() {
         Log.e("ManualModeFragment", "onStopView!");
         super.onStop();
+    }
+
+    @Override
+    public void onDestroyView() {
+        FragmentManager fragmentManager = getChildFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+        ColorPickerFragment colorPickerFragment = myPagerAdapter.getColorPickerFragment();
+        PresetsFragment presetsFragment = myPagerAdapter.getPresetsFragment();
+
+        /*
+        fragmentTransaction.remove(colorPickerFragment);
+        Log.e("REMOVED", "colorPickerFragment");
+        fragmentTransaction.remove(presetsFragment);
+        Log.e("REMOVED", "presetsFragment");
+        fragmentTransaction.commit();*/
+        super.onDestroyView();
     }
 
     @Override
