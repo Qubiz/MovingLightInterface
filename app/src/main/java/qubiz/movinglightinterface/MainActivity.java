@@ -1,16 +1,24 @@
 package qubiz.movinglightinterface;
 
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
-import qubiz.movinglightinterface.adapters.MyPagerAdapter;
 import qubiz.movinglightinterface.fragments.AutomaticModeFragment;
+import qubiz.movinglightinterface.fragments.ManualModeFragment;
 
 public class MainActivity extends ActionBarActivity {
+
+    AppCompatButton modeToggleButton;
+
+    private boolean automaticMode = true;
+
+    private AutomaticModeFragment automaticModeFragment;
+    private ManualModeFragment manualModeFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,15 +31,17 @@ public class MainActivity extends ActionBarActivity {
             setSupportActionBar(toolbar);
         }
 
-        // CREATE THE FIRST FRAGMENT
-        if(findViewById(R.id.fragment_container) != null) {
-            if(savedInstanceState != null) {
+        // CREATE THE FRAGMENTS
+        if (findViewById(R.id.fragment_container) != null) {
+            if (savedInstanceState != null) {
                 return;
             }
 
-            AutomaticModeFragment automaticModeFragment = new AutomaticModeFragment();
+            automaticModeFragment = new AutomaticModeFragment();
+            manualModeFragment = new ManualModeFragment();
 
             automaticModeFragment.setArguments(getIntent().getExtras());
+            manualModeFragment.setArguments(getIntent().getExtras());
 
             getSupportFragmentManager()
                     .beginTransaction()
@@ -39,7 +49,27 @@ public class MainActivity extends ActionBarActivity {
                     .commit();
         }
 
-
+        modeToggleButton = (AppCompatButton) findViewById(R.id.mode_toggle_button);
+        modeToggleButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (automaticMode) {
+                    modeToggleButton.setText("M A N U A L");
+                    getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.fragment_container, manualModeFragment, "MANUAL_TAG")
+                            .commit();
+                    automaticMode = false;
+                } else {
+                    modeToggleButton.setText("A U T O M A T I C");
+                    getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.fragment_container, automaticModeFragment, "AUTOMATIC_TAG")
+                            .commit();
+                    automaticMode = true;
+                }
+            }
+        });
     }
 
     @Override

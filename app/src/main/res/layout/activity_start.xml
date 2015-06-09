@@ -22,8 +22,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="A U T O M A T I C"
-            android:id="@+id/toggleButton"
+            android:id="@+id/mode_toggle_button"
             android:layout_gravity="center"
+            android:textColor="@color/secondary_text"
             app:backgroundTint="@color/accent"/>
     </FrameLayout>
 
