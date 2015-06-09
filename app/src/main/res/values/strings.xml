@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">LIGHT</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="switch_on_text">ON</string>
+    <string name="switch_off_text">OFF</string>
+    <string name="switch_automatic_mode_text">AUTO</string>
+    <string name="switch_manual_mode_text">MANUAL</string>
+</resources>
